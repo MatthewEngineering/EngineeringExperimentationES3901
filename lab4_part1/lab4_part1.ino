@@ -37,6 +37,18 @@ void setup(void)
   StartTime = millis();
 }
 
+
+const int numReadings = 10;
+int readings[numReadings];
+int readIndex = 0;          // the index of the current reading
+int total = 0;              // the running total
+int average = 0;            // the average
+
+
+int calculate_average(int current_reading){
+
+}
+
 void loop(void)
 {  
   rawADCvalue = ads1115.readADC_Differential_0_1(); // Differential voltage measurement between A0 and A1 on the ADC chip
@@ -45,6 +57,12 @@ void loop(void)
   TempDegC = a0 + a1*uV + a2*pow(uV,2) + a3*pow(uV,3) + a4*pow(uV,4) + a5*pow(uV,5) + a6*pow(uV,6);
   unsigned long CurrentTime = millis();
   float ElapsedTime = (CurrentTime-StartTime)/1000.0;
+  
+
+  average = calculate_average(uV);
+  // now put average into the serial output
+  // maybe have it pass as a global variable instead
+  
   Serial.print("Time (sec) "); 
   Serial.print(ElapsedTime,3); 
   Serial.print(",   microVolts Measured = ");
