@@ -9,8 +9,8 @@ int16_t rawADCvalue;  // The is where we store the value we receive from the ADS
                       //   significant bit reserved for sign (+ or -)
 
 float volts = 0.0;        // The result of applying the scale factor to the raw value
-//float bit_res = 0.0078125;    //  This is the bit resolution in [mV] will change with the gain, please refer to the table below
-float bit_res = 0.1250000;    //  This is the bit resolution in [mV] will change with the gain, please refer to the table below
+float bit_res = 0.0078125;    //  This is the bit resolution in [mV] will change with the gain, please refer to the table below
+//float bit_res = 0.1250000;    //  This is the bit resolution in [mV] will change with the gain, please refer to the table below
 float uV = 0.0;           //  This is just volts times a million [uV]
 float a0 = 0, a1 = 2.5928e-2, a2 = -7.602961e-7, a3 = 4.637791e-11;  //  These are the NIST coefficients for converting voltage readings to temperature
 float a4 = -2.165394e-15, a5 = 6.048144e-20, a6 = -7.293422e-25;    //  These are the NIST coefficients for converting voltage readings to temperature
@@ -31,38 +31,50 @@ unsigned long StartTime = 0;
 void setup(void)
 {
   Serial.begin(9600); 
-  ads1115.setGain(GAIN_ONE);  // Set gain to 16x
+  ads1115.setGain(GAIN_SIXTEEN);  // Set gain to 16x
   ads1115.begin(0x48);
   //  start a timer
   StartTime = millis();
 }
 
-
+/////////////////////////////////////////////
 const int numReadings = 10;
 int readings[numReadings];
 int readIndex = 0;          // the index of the current reading
 int total = 0;              // the running total
 int average = 0;            // the average
 
-
-int calculate_average(int current_reading){
-
+float calculate_average(float current_reading){
+  total = total - readings[readIndex];
+  readings[readIndex] = current_reading;
+  total = total + readings[readIndex];
+  readIndex = readIndex + 1;
+  if (readIndex >= numReadings) { // if we're at the end of the array 
+    // ...wrap around to the beginning:
+    readIndex = 0;
+  }
+  average = total / numReadings;
+  return average;
 }
+/////////////////////////////////////////////
+
 
 void loop(void)
 {  
   rawADCvalue = ads1115.readADC_Differential_0_1(); // Differential voltage measurement between A0 and A1 on the ADC chip
   volts = rawADCvalue * bit_res; // Convert rawADC number to voltage in [mV]
   uV = volts*1e3; // Express the voltage in microVolts
+
+  /////////////////////////////////////////////
+  uV = calculate_average(uV);
+  // now put average into the serial output
+  // maybe have it pass as a global variable instead
+  /////////////////////////////////////////////
+  
   TempDegC = a0 + a1*uV + a2*pow(uV,2) + a3*pow(uV,3) + a4*pow(uV,4) + a5*pow(uV,5) + a6*pow(uV,6);
   unsigned long CurrentTime = millis();
   float ElapsedTime = (CurrentTime-StartTime)/1000.0;
-  
-
-  average = calculate_average(uV);
-  // now put average into the serial output
-  // maybe have it pass as a global variable instead
-  
+    
   Serial.print("Time (sec) "); 
   Serial.print(ElapsedTime,3); 
   Serial.print(",   microVolts Measured = ");
