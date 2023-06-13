@@ -44,7 +44,36 @@ void setup(void)
 }
 
 float do_calculations(float uV){
-  return 123.0;
+
+//  V = I * R
+//  current stays same in series
+
+//  voltage and current in resistor
+  float Vr = uV / 1000000;
+  float I = Vr / 10000; // 10,000 Ohm Resistor
+
+//  find voltage in thermistor
+  float Vt = 5.0 - Vr;
+  float Rt = Vt / I;
+
+//  using the Steinhard Hart Equation from Canvas: 
+//  setting for this thermistor for this equation
+  float Beta = 3950; 
+  float To = 22.75+273; // kelvin
+  float Ro = 10530;
+
+//  Equation (cut up into intermediates)
+  float a_log = log( Rt / Ro);
+  float bottom = ( a_log / Beta ) + (1/To);
+  float T = 1/bottom;
+
+//  return Rt; // for calibration of Ro
+  return T - 273;
+}
+
+float perform_calibration(float T){
+  
+  return T; 
 }
 
 void loop(void)
@@ -61,6 +90,9 @@ void loop(void)
   Serial.print(uV,2);
 
   float T = do_calculations(uV);
+
+  T = perform_calibration(T);
+
   
   Serial.print(",   Temperature (deg C) = ");
   Serial.println(T,2);
