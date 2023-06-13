@@ -33,7 +33,7 @@ unsigned long StartTime = 0;
 // ads1015.setGain(GAIN_FOUR);     // 4x gain   +/- 1.024V  1 bit = 0.5mV       1 bit =  31.25 micro-V
 // ads1015.setGain(GAIN_EIGHT);    // 8x gain   +/- 0.512V  1 bit = 0.25mV      1 bit =  15.625 micro-V
 // ads1015.setGain(GAIN_SIXTEEN);  // 16x gain  +/- 0.256V  1 bit = 0.125mV     1 bit =  7.8125 micro-V
-//
+
 void setup(void)
 {
   Serial.begin(9600); 
@@ -72,7 +72,7 @@ float do_calculations(float uV){
 }
 
 float perform_calibration(float T){
-  
+   
   return T; 
 }
 
