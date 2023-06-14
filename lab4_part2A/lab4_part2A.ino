@@ -10,8 +10,8 @@ int16_t rawADCvalue;  // The is where we store the value we receive from the ADS
 
 float volts = 0.0;        // The result of applying the scale factor to the raw value
 
-//float bit_res = 0.1875000;
-float bit_res = 0.1250000;
+float bit_res = 0.1875000;
+//float bit_res = 0.1250000;
 //float bit_res = 0.0625000;
 //float bit_res = 0.0312500;
 //float bit_res = 0.0156250;
@@ -37,7 +37,7 @@ unsigned long StartTime = 0;
 void setup(void)
 {
   Serial.begin(9600); 
-  ads1115.setGain(GAIN_ONE);  // Set gain to 16x
+  ads1115.setGain(GAIN_TWOTHIRDS);  // Set gain to 16x
   ads1115.begin(0x48);
   //  start a timer
   StartTime = millis();
@@ -83,18 +83,18 @@ void loop(void)
 //  TempDegC = a0 + a1*uV + a2*pow(uV,2) + a3*pow(uV,3) + a4*pow(uV,4) + a5*pow(uV,5) + a6*pow(uV,6);
   unsigned long CurrentTime = millis();
   float ElapsedTime = (CurrentTime-StartTime)/1000.0;
-  Serial.print("Time (sec) "); 
+//  Serial.print("Time (sec) "); 
   Serial.print(ElapsedTime,3); 
-  Serial.print(",   microVolts Measured = ");
-  Serial.print(uV,2);
+//  Serial.print(",   microVolts Measured = ");
+//  Serial.print(uV,2);
 
   float T = do_calculations(uV);
 
   T = perform_calibration(T);
 
-  
-  Serial.print(",   Temperature (deg C) = ");
+  Serial.print(",");
+//  Serial.print(",   Temperature (deg C) = ");
   Serial.println(T,2);
-  Serial.println();
+//  Serial.println();
   delay(500);
 }
