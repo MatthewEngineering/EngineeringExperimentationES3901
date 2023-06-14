@@ -72,8 +72,7 @@ float do_calculations(float uV){
 }
 
 float perform_calibration(float T){
-   
-  return T; 
+  return (1.01*T) + 0.234; 
 }
 
 void loop(void)
