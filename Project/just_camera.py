@@ -1,0 +1,1 @@
+# https://manuals.plus/arducam/ov2640-mini-2mp-spi-camera-on-raspberry-pi-pico-manual#axzz84mRaeiRQ
