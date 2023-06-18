@@ -29,13 +29,17 @@ def read_fifo_burst():
     mycam.set_fifo_burst()
     while True:
         mycam.spi.readinto(buffer,start=0,end=once_number)
+        print(buffer)
         usb_cdc.data.write(buffer)
+        
         utime.sleep(0.00015)
         count+=once_number
         if count+once_number>lenght:
             count=lenght-count
             mycam.spi.readinto(buffer,start=0,end=count)
-            usb_cdc.data.write(buffer)
+            print(buffer)
+            usb_cdc.data.write(buffer) 
+            
             mycam.SPI_CS_HIGH()
             mycam.clear_fifo_flag()
             break
