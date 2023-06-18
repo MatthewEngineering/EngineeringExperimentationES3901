@@ -114,70 +114,8 @@ capture_to_bytes()
 
 print(buffer)
 
-
-
-# b = io.BytesIO(buffer)
-# print(b)
-# image = Image.open(b)
-# # image = Image.open('.//..//circuit.jpg')
-# image.show()
-
 print(gc.mem_free())
 gc.collect()
 print(gc.mem_free())
 
-print('starting wifi section')
 
-import binascii
-print(gc.mem_free())
-import wifi
-print(gc.mem_free())
-import socketpool
-print(gc.mem_free())
-from adafruit_minimqtt.adafruit_minimqtt import MQTT
-print(gc.mem_free())
-
-from adafruit_io.adafruit_io import IO_MQTT
-print(gc.mem_free())
-
-# import adafruit_ov2640
-import ssl
-
-
-print(gc.mem_free())
-
-feed_name = "image"
-
-print("Connecting to WIFI")
-wifi.radio.connect("iPhone123", "123456789")
-pool = socketpool.SocketPool(wifi.radio)
-
-print("Connecting to Adafruit IO")
-mqtt_client = MQTT(
-    broker="io.adafruit.com",
-    username="Code780",
-    password="aio_XIYX50ED7CiOOZarSVlacSAo0ZOZ",
-    socket_pool=pool,
-    ssl_context=ssl.create_default_context(),
-)
-mqtt_client.connect()
-io = IO_MQTT(mqtt_client)
-
-
-
-
-print(f"Captured {len(buffer)} bytes of jpeg data")
-# import base64
-
-print(gc.mem_free())
-# b2a_base64() appends a trailing newline, which IO does not like
-encoded_data = binascii.b2a_base64(buffer).strip()
-# encoded_data = base64.b64encode(buffer)
-print(f"Expanded to {len(encoded_data)} for IO upload")
-
-io.publish("image", encoded_data)
-
-
-
-
-print('done!')
