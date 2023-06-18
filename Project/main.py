@@ -1,1 +1,0 @@
-print(type(0x41))
