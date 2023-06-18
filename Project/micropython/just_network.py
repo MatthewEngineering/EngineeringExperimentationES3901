@@ -1,5 +1,3 @@
-# https://www.youtube.com/watch?v=GiT3MzRzG48
-
 # A simple example that:
 # - Connects to a WiFi Network defined by "ssid" and "password"
 # - Performs a GET request (loads a webpage)
