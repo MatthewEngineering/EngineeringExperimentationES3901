@@ -11,7 +11,7 @@ ImageFile.LOAD_TRUNCATED_IMAGES = False
 
 # pic just taken 
 import image_storage
-buffer = image_storage.a
+buffer = image_storage.b
 
 # import image_izer
 #buffer = bytearray(image_izer.a)
