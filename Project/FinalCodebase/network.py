@@ -1,48 +1,52 @@
 import gc
 print(gc.mem_free())
-import ssl
+from ssl import create_default_context
 print(gc.mem_free())
-import binascii
+from binascii import b2a_base64
 print(gc.mem_free())
-import wifi
+from wifi import radio
 print(gc.mem_free())
-import socketpool
+from socketpool import SocketPool
 print(gc.mem_free())
-# from adafruit_minimqtt.adafruit_minimqtt import MQTT
-print(gc.mem_free())
-
-import adafruit_requests
+from adafruit_requests import Session
 from adafruit_io.adafruit_io import IO_HTTP, AdafruitIO_RequestError
-
-
-# from adafruit_io.adafruit_io import IO_MQTT
 print(gc.mem_free())
 
 print("Connecting to WIFI")
-wifi.radio.connect("iPhone123", "123456789")
-pool = socketpool.SocketPool(wifi.radio)
+radio.connect("iPhone123", "123456789")
+pool = SocketPool(radio)
 
 import os
 aio_username = os.getenv('aio_username')
 aio_key = os.getenv('aio_key')
-requests = adafruit_requests.Session(pool, ssl.create_default_context())
+requests = Session(pool, create_default_context())
 io = IO_HTTP(aio_username, aio_key, requests)
 
+print(gc.mem_free())
 
-def send_off(feed_name,info):
-
-    print(f"Captured {len(info)} bytes of jpeg data")
-
-    encoded_data = binascii.b2a_base64(info).strip() # b2a_base64() appends a trailing newline, which IO does not like
-    print(f"Expanded to {len(encoded_data)} for IO upload")
-
-    io.send_data(feed_name, encoded_data)
-
+# unpacked_image = 
+def expand_and_send_image(feed_name, compressed_image):
+    gc.collect()
+    print(f"Captured {len(compressed_image)} bytes of jpeg data")
+#     print(f"Expanded to {len(encoded_data)} for IO upload")
+    
+    io.send_data(feed_name, b2a_base64(compressed_image).strip())
+    
     gc.collect()
 
-    print('done!')
+def main(feed_name,data):
+    io.send_data(feed_name, data)
+    gc.collect() 
     
 if __name__ == "__main__":
-    import image_storage
-    buffer = image_storage.a
-    send_off('image',buffer)
+#     main('accelerometer','I am a string.')
+    print(gc.mem_free())
+
+    from FinalCodebase.image_storage import b
+    
+    print(gc.mem_free())
+
+    expand_and_send_image('image',b)
+
+    print(gc.mem_free())
+    

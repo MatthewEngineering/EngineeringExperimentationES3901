@@ -1,0 +1,5 @@
+CIRCUITPY_WIFI_SSID = "iPhone123"
+CIRCUITPY_WIFI_PASSWORD = "123456789"
+
+aio_username = "Code780"
+aio_key = "aio_XIYX50ED7CiOOZarSVlacSAo0ZOZ"
