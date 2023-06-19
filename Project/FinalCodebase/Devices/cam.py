@@ -1,3 +1,4 @@
+# https://github.com/namato/micropython-ov2640/blob/master/ov2640.py#L160
 import time as utime
 import busio
 import board
