@@ -30,6 +30,8 @@ def calculate_tilt_angles(x, y, z):
     
     return pitch, roll
  
+
+import network
 while True:
     # Read the acceleration values from the ADXL335
     x = read_acceleration(adc_x)
@@ -39,8 +41,11 @@ while True:
     # Calculate the tilt angles
     pitch, roll = calculate_tilt_angles(x, y, z)
     
+    info = "X: {:.2f}g, Y: {:.2f}g, Z: {:.2f}g, Pitch: {:.2f}°, Roll: {:.2f}°".format(x, y, z, pitch, roll)
     # Print the acceleration values and tilt angles
-    print("X: {:.2f}g, Y: {:.2f}g, Z: {:.2f}g, Pitch: {:.2f}°, Roll: {:.2f}°".format(x, y, z, pitch, roll))
+    print(info)
+    
+    network.send_off(feed_name='accelerometer',info=info)
     
     # Wait for a while before reading again
     time.sleep(1)

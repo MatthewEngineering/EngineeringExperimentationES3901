@@ -1,7 +1,6 @@
 import time as utime
 import busio
 import board
-import usb_cdc
 from Arducam import *
 from board import *
 
