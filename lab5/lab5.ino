@@ -43,38 +43,6 @@ void setup(void)
   StartTime = millis();
 }
 
-//float do_calculations(float uV){
-//
-////  V = I * R
-////  current stays same in series
-//
-////  voltage and current in resistor
-//  float Vr = uV / 1000000;
-//  float I = Vr / 10000; // 10,000 Ohm Resistor
-//
-////  find voltage in thermistor
-//  float Vt = 5.0 - Vr;
-//  float Rt = Vt / I;
-//
-////  using the Steinhard Hart Equation from Canvas: 
-////  setting for this thermistor for this equation
-//  float Beta = 3950; 
-//  float To = 22.75+273; // kelvin
-//  float Ro = 10530;
-//
-////  Equation (cut up into intermediates)
-//  float a_log = log( Rt / Ro);
-//  float bottom = ( a_log / Beta ) + (1/To);
-//  float T = 1/bottom;
-//
-////  return Rt; // for calibration of Ro
-//  return T - 273;
-//}
-//
-//float perform_calibration(float T){
-//  return (1.01*T) + 0.234; 
-//}
-
 void loop(void)
 {  
   rawADCvalue = ads1115.readADC_Differential_0_1(); // Differential voltage measurement between A0 and A1 on the ADC chip

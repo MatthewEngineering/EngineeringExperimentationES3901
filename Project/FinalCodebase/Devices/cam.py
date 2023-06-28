@@ -2,12 +2,13 @@
 import time as utime
 import busio
 import board
-from Arducam import *
-from board import *
+from FinalCodebase.Arducam import ArducamClass, OV2640
+# from Arducam import *
+# from board import *
 
 import gc
 
-print(gc.mem_free())
+# print(gc.mem_free())
 
 once_number=128
 mode = 0
@@ -26,9 +27,13 @@ utime.sleep(1)
 mycam.clear_fifo_flag()
 
 class camera_device():
-    def __init__(self):
+    def __init__(self,jpg):
         self.buffer = bytearray()
         
+        if jpg < 0 or jpg > 8 or not isinstance(jpg, int):
+            raise Exception("jpg is set correctly")
+        
+        mycam.OV2640_set_JPEG_size(jpg)
 
     def capture_to_bytes(self):
         mycam.clear_fifo_flag()
@@ -94,7 +99,6 @@ class camera_device():
             self.appendbuf(picbuf, bp)
         print("read %d bytes from fifo, camera said %d were available" % (l, val))
         # return (l)
-
         return self.buffer
 
     def appendbuf(self, picbuf, howmany):
@@ -127,5 +131,6 @@ def main():
 
 if __name__ == "__main__":
     print(main())
+#     print(gc.mem_free())
 
 

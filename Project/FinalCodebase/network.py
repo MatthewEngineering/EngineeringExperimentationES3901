@@ -17,8 +17,8 @@ radio.connect("iPhone123", "123456789")
 pool = SocketPool(radio)
 
 import os
-aio_username = os.getenv('aio_username')
-aio_key = os.getenv('aio_key')
+aio_username = "Code780"
+aio_key = "aio_XIYX50ED7CiOOZarSVlacSAo0ZOZ"
 requests = Session(pool, create_default_context())
 io = IO_HTTP(aio_username, aio_key, requests)
 
@@ -32,6 +32,7 @@ def expand_and_send_image(feed_name, compressed_image):
     
     io.send_data(feed_name, b2a_base64(compressed_image).strip())
     
+    print(gc.mem_free())
     gc.collect()
 
 def main(feed_name,data):
@@ -42,11 +43,11 @@ if __name__ == "__main__":
 #     main('accelerometer','I am a string.')
     print(gc.mem_free())
 
-    from FinalCodebase.image_storage import b
-    
-    print(gc.mem_free())
+    from FinalCodebase.image_storage import a
+    expand_and_send_image('image',a)
 
-    expand_and_send_image('image',b)
+#     x = -0.0127
+#     main("x",x)
 
     print(gc.mem_free())
     

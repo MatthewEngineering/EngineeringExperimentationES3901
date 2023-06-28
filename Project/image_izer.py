@@ -17,7 +17,7 @@ def main(buffer):
     print(img_byte_arr)
 
 # pic saved 
-import image_storage
-buffer = image_storage.b
+import FinalCodebase.image_storage as image_storage
+buffer = image_storage.a
 main(buffer) 
 
